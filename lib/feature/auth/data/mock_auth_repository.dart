@@ -19,7 +19,7 @@ class MockAuthRepository implements AuthRepository {
   }
 
   @override
-  Future refreshToken({required String refreshToken}) {
+  Future refreshToken({String? refreshToken}) {
     // TODO: implement refreshToken
     throw UnimplementedError();
   }
@@ -29,7 +29,6 @@ class MockAuthRepository implements AuthRepository {
     return Future.delayed(Duration(seconds: 2), () {
       return UserEntity(email: "testEmail", username: username, id: "-1");
     });
-
   }
 
   @override
