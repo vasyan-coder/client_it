@@ -1,6 +1,5 @@
 import 'package:client_it/feature/auth/domain/auth_repository.dart';
 import 'package:client_it/feature/auth/domain/entities/user_entity/user_entity.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
@@ -24,9 +23,8 @@ class AuthCubit extends HydratedCubit<AuthState> {
       final UserEntity userEntity =
           await authRepository.signIn(password: password, username: username);
       emit(AuthState.authorized(userEntity));
-    } catch (error) {
-      emit(AuthState.error(error));
-      rethrow;
+    } catch (error, st) {
+      addError(error, st);
     }
   }
 
@@ -40,9 +38,8 @@ class AuthCubit extends HydratedCubit<AuthState> {
       final UserEntity userEntity = await authRepository.signUp(
           password: password, username: username, email: email);
       emit(AuthState.authorized(userEntity));
-    } catch (error) {
-      emit(AuthState.error(error));
-      rethrow;
+    } catch (error, st) {
+      addError(error, st);
     }
   }
 
@@ -63,5 +60,11 @@ class AuthCubit extends HydratedCubit<AuthState> {
                 authorized: (userEntity) => AuthState.authorized(userEntity))
             ?.toJson() ??
         AuthState.notAuthorized().toJson();
+  }
+
+  @override
+  void addError(Object error, [StackTrace? stackTrace]) {
+    emit(AuthState.error(error));
+    super.addError(error, stackTrace);
   }
 }
