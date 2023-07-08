@@ -5,7 +5,7 @@ import 'package:injectable/injectable.dart';
 @prod
 class ProdAppConfig implements AppConfig {
   @override
-  String get baseUrl => "localhost";
+  String get baseUrl => "http://10.0.2.2";
 
   @override
   String get host => Environment.prod;
@@ -15,7 +15,7 @@ class ProdAppConfig implements AppConfig {
 @dev
 class DevAppConfig implements AppConfig {
   @override
-  String get baseUrl => "localhost";
+  String get baseUrl => "http://10.0.2.2";
 
   @override
   String get host => Environment.dev;
